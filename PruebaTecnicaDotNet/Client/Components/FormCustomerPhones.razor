@@ -1,14 +1,18 @@
-﻿<h3>Formulario para celulares</h3>
-
-<EditForm Model="@CustomerPhone">
-    <div class="form-group">
-        <label>Numero celular</label>
-        <InputText @bind-Value="CustomerPhone.cpPhone" />
+﻿<EditForm Model="@CustomerPhone">
+    <div class="row">
+        <div class="form-group col-6">
+            <label>Numero celular</label>
+            <InputText @bind-Value="CustomerPhone.cpPhone" />
+        </div>
+        <div class="row p-2">
+            <div class="form-group col-6">
+                <input type="submit" class="btn btn-success" value="Crear" @onclick="(() => Crear())" />
+            </div>
+            <div class="form-group col-6">
+                <input type="submit" class="btn btn-danger" value="Cancelar" @onclick="Cancel" />
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <input type="submit" class="btn btn-success" value="Crear" @onclick="(() => Crear())" />
-    </div>
-    <input type="submit" class="btn btn-danger" value="Cancelar" @onclick="Cancel"/>
 </EditForm>
 @code {
     private CustomerPhoneViewModel CustomerPhone = new();

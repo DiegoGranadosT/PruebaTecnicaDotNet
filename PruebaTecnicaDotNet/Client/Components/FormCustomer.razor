@@ -1,25 +1,31 @@
 ﻿<EditForm Model="@Customer">
-    <div class="form-group">
-        <label>Nombre 1: </label>
-        <InputText @bind-Value="Customer.cName1" />
-    </div>
-    <div class="form-group">
-        <label>Nombre 2: </label>
-        <InputText @bind-Value="Customer.cName2" />
-    </div>
-    <div class="form-group">
-        <label>Apellido 1: </label>
-        <InputText @bind-Value="Customer.cLastName1" />
-    </div>
-    <div class="form-group">
-        <label>Apellidos 2: </label>
-        <InputText @bind-Value="Customer.cLastName2" />
-    </div>
-    <div class="form-group">
-        <input type="submit" class="btn btn-success" value="Crear" @onclick="(() => Add())" />
+    <div class="row">
+        <div class="form-group col-6">
+            <label>Nombre 1: </label>
+            <InputText @bind-Value="Customer.cName1" />
+        </div>
+        <div class="form-group col-6">
+            <label>Nombre 2: </label>
+            <InputText @bind-Value="Customer.cName2" />
+        </div>
+        <div class="form-group col-6">
+            <label>Apellido 1: </label>
+            <InputText @bind-Value="Customer.cLastName1" />
+        </div>
+        <div class="form-group col-6">
+            <label>Apellidos 2: </label>
+            <InputText @bind-Value="Customer.cLastName2" />
+        </div>
+        <div class="row p-2">
+            <div class="form-group col-6">
+                <input type="submit" class="btn btn-success" value="Crear" @onclick="(() => Add())" />
+            </div>
+            <div class="form-group col-6">
+                <input type="submit" class="btn btn-danger" value="Cancelar" @onclick="(() => Cancel())" />
+            </div>
+        </div>
     </div>
 </EditForm>
-<input type="submit" class="btn btn-danger" value="Cancelar" @onclick="(() => Cancel())" />
 @code {
     private CustomerViewModel Customer = new();
 
