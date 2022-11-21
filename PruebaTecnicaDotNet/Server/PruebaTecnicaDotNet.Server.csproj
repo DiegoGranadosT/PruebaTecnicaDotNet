@@ -24,5 +24,7 @@
     <ProjectReference Include="..\Shared\PruebaTecnicaDotNet.Shared.csproj" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1development_1json__JsonSchema="https://json.schemastore.org/appsettings.json" /></VisualStudio></ProjectExtensions>
+
 
 </Project>
