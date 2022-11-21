@@ -45,10 +45,10 @@
 @code {
     [Parameter]
     public List<CustomerViewModel>? Customers { get; set; }
-
+    
     public string title = "Celulares";
 
-    public void ViewPhone(int cId)
+    protected void ViewPhone(int cId)
     {
         var option = new ModalOptions
             {
