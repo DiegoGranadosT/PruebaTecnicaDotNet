@@ -1,0 +1,37 @@
+﻿<h3>Listado de numeros de celular</h3>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Id</th>
+            <th>Numero celular</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (CustomerPhones != null || CustomerPhones.Count == 0){
+            @foreach (var customer in CustomerPhones.OrderByDescending(x => x.cpId))
+            {
+                <tr data-widget="expandable-table" aria-expanded="false">
+                    <td></td>
+                    <td>@customer.cpId</td>
+                    <td>@customer.cpPhone</td>
+                </tr>
+                <tr class="expandable-body">
+                </tr>
+            }
+        }else{
+            <h2>Sin datos</h2>
+        }
+    </tbody>
+</table>
+@code {
+    private List<CustomerPhoneViewModel>? CustomerPhones = new();
+
+    [Parameter]
+    public int cId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        CustomerPhones = await Http.GetFromJsonAsync<List<CustomerPhoneViewModel>>($"/api/CustomerPhone/customer/{cId}");
+    }
+}

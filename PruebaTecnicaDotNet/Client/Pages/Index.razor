@@ -1,0 +1,13 @@
+﻿@page "/"
+<PageTitle>Index</PageTitle>
+
+<TableCustomer Customers="Customers"></TableCustomer>
+@code {
+
+    private List<CustomerViewModel>? Customers = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Customers = await Http.GetFromJsonAsync<List<CustomerViewModel>>($"/api/Customer/");
+    }
+}

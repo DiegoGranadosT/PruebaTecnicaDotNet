@@ -1,0 +1,33 @@
+﻿<h3>Formulario para celulares</h3>
+
+<EditForm Model="@CustomerPhone">
+    <div class="form-group">
+        <label>Numero celular</label>
+        <InputText @bind-Value="CustomerPhone.cpPhone" />
+    </div>
+    <div class="form-group">
+        <input type="submit" class="btn btn-success" value="Crear" @onclick="(() => Crear())" />
+    </div>
+    <input type="submit" class="btn btn-danger" value="Cancelar" @onclick="Cancel"/>
+</EditForm>
+@code {
+    private CustomerPhoneViewModel CustomerPhone = new();
+
+    [Parameter]
+    public int cId { get; set; }
+
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
+
+    private async Task Crear()
+    {
+        CustomerPhone.cId = cId;
+        var response = await Http.PostAsJsonAsync<CustomerPhoneViewModel>($"/api/CustomerPhone/", CustomerPhone);
+
+        if (response.IsSuccessStatusCode)
+        {
+            await BlazoredModal.CloseAsync(ModalResult.Ok(true));
+        }
+    }
+
+    async Task Cancel() => await BlazoredModal.CancelAsync();
+}

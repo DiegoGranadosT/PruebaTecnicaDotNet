@@ -1,0 +1,79 @@
+﻿@inject IModalService modal
+<h3>Clientes</h3>
+<input type="submit" class="btn btn-success" value="Crear" @onclick="(() => Add())" />
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Id</th>
+            <th>Nombre 1</th>
+            <th>Nombre 2</th>
+            <th>Apellido 1</th>
+            <th>Apellido 2</th>
+            <th>Numero celular</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Customers != null || Customers.Count == 0)
+        {
+            @foreach (var customer in Customers)
+            {
+                <tr data-widget="expandable-table" aria-expanded="false">
+                    <td></td>
+                    <td>@customer.cId</td>
+                    <td>@customer.cName1</td>
+                    <td>@customer.cName2</td>
+                    <td>@customer.cLastName1</td>
+                    <td>@customer.cLastName2</td>
+                    <td>@customer.CustomerPhones.FirstOrDefault().cpPhone</td>
+                    <td>
+                        <input type="submit" class="btn btn-success" value="Ver" @onclick="(() => ViewPhone(customer.cId))" />
+                        <input type="submit" class="btn btn-success" value="Crear" @onclick="(() => AddPhone(customer.cId))" />
+                    </td>
+                </tr>
+                <tr class="expandable-body">
+                </tr>
+            }
+        }
+        else
+        {
+            <h2>Sin datos</h2>
+        }
+    </tbody>
+</table>
+@code {
+    [Parameter]
+    public List<CustomerViewModel>? Customers { get; set; }
+
+    public string title = "Celulares";
+
+    public void ViewPhone(int cId)
+    {
+        var option = new ModalOptions
+            {
+                ActivateFocusTrap = false
+            };
+        var parameters = new ModalParameters();
+        parameters.Add("cId", cId);
+        modal.Show<TableCustomerPhones>("Tabla de numero de celulares", parameters);
+    }
+
+    async Task AddPhone(int cId)
+    {
+        var parameters = new ModalParameters();
+        parameters.Add("cId", cId);
+        var response = modal.Show<FormCustomerPhones>("Formulario de celulares", parameters);
+        var result = await response.Result;
+
+        if (!result.Cancelled) Customers = await Http.GetFromJsonAsync<List<CustomerViewModel>>($"/api/Customer/");
+    }
+
+    async Task Add()
+    {
+        var response = modal.Show<FormCustomer>("Formulario de cliente");
+        var result = await response.Result;
+
+        if (!result.Cancelled) Customers = await Http.GetFromJsonAsync<List<CustomerViewModel>>($"/api/Customer/");
+    }
+}
